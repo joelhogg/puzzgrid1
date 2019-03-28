@@ -19,5 +19,20 @@
 		<br>
 		<a class="links" href="puzzgrid3.html">PuzzGrid</a>
 	</div>
+	<br><br>
+	<div class="links_wrapper">
+		<p style="display: none;"id="hidden_text">
+		-Once you begin the grid you will have three minutes to complete it.
+		<br>
+		-Clicking on squares selects them
+		<br>
+		-Clicking on a selected square unselects it.
+		<br>
+		-Try to select four items that are linked together, but remember that there may be red-herrings
+		<br>
+		-Once you have eliminated two groups of 4 you will only have three lives to select the final group
+		</p>
+		<a href="#" onclick="document.getElementById('hidden_text').style.display='block'; return false;">Instructions</a>
+	</div>
 	
 </html>
