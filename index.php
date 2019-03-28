@@ -17,7 +17,11 @@
 	<div class="links_wrapper">
 		<a class="links" href="puzzgrid2.html">Country PuzzGrid</a>
 		<br>
-		<a class="links" href="puzzgrid3.html">PuzzGrid</a>
+		<a class="links" href="puzzgrid5.html">Beatles PuzzGrid</a>
+		<br><br>
+		<a class="links" href="puzzgrid3.html">PuzzGrid #1</a>
+		<br>
+		<a class="links" href="puzzgrid4.html">PuzzGrid #2</a>
 	</div>
 	<br><br>
 	<div class="links_wrapper">
