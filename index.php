@@ -22,6 +22,14 @@
 		<a class="links" href="puzzgrid3.html">PuzzGrid #1</a>
 		<br>
 		<a class="links" href="puzzgrid4.html">PuzzGrid #2</a>
+		<br>
+		<a class="links" href="puzzgrid6.html">PuzzGrid #3</a>
+		<br>
+		<a class="links" href="puzzgrid7.html">PuzzGrid #4</a>
+		<br>
+		<a class="links" href="puzzgrid8.html">PuzzGrid #5 (feindish!)</a>
+		<br>
+		<a class="links" href="puzzgrid9.html">PuzzGrid #6</a>
 	</div>
 	<br><br>
 	<div class="links_wrapper">
