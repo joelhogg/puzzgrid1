@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HoggHome-Online Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="WebRTC getUserMedia MediaRecorder API">
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+      button{
+        margin: 10px 5px;
+      }
+      li{
+        margin: 10px;
+      }
+      body{
+        width: 90%;
+        max-width: 960px;
+        margin: 0px auto;
+      }
+      #btns{
+        display: none;
+      }
+      h1{
+        margin: 100px;
+      }
+	  .RCB_1 {
+		width=100px;
+		height=100px;
+		background: #ddd;
+		margin: 20px 90px;
+		
+		border-radius: 100%;
+		position: relative;
+		box-shadow: 0px 1px 3px rgba(0,0,0,0,0.5);
+	  }
+	  
+		<!-- div label input { -->
+			<!-- margin-right:100px; -->
+		<!-- } -->
+		<!-- body { -->
+			<!-- font-family:sans-serif; -->
+		<!-- } -->
+
+		<!-- #ck-button { -->
+			<!-- width: 200px; -->
+			<!-- height: 200px; -->
+			<!-- background-color:#EFEFEF; -->
+			<!-- border-radius: 50%; -->
+			<!-- border:10px solid #D0D0D0; -->
+			<!-- overflow: hidden; -->
+			<!-- float:left; -->
+		<!-- } -->
+
+		<!-- #ck-button { -->
+			<!-- text-align: center-middle; -->
+			<!-- margin:4px; -->
+			<!-- background-color:#EFEFEF; -->
+			<!-- border-radius: 50%; -->
+			<!-- border:1px solid #D0D0D0; -->
+			<!-- overflow: hidden; -->
+			<!-- float: center-middle; -->
+		<!-- } -->
+
+		<!-- #ck-button:hover { -->
+			<!-- margin:10px; -->
+			<!-- background-color:#EFEFEF; -->
+			<!-- border-radius: 50%; -->
+			<!-- border:1px solid red; -->
+			<!-- overflow:auto; -->
+			<!-- float:left; -->
+			<!-- color:red; -->
+		<!-- } -->
+
+		<!-- #ck-button label { -->
+			<!-- float:left; -->
+			<!-- width:4.0em; -->
+		<!-- } -->
+
+		<!-- #ck-button label span { -->
+			<!-- text-align:center; -->
+			<!-- padding:3px 0px; -->
+			<!-- display:block; -->
+		<!-- } -->
+
+		<!-- #ck-button label input { -->
+			<!-- position:absolute; -->
+			<!-- top:-20px; -->
+		<!-- } -->
+
+		<!-- #ck-button input:checked + span { -->
+			<!-- background-color:#911; -->
+			<!-- color:#fff; -->
+		<!-- } -->
+    </style>
+  </head>
+  <body>
+    <h1>HoggHome-Online Demo</h1>
+
+    <div id='gUMArea'>
+      <div>
+        <!-- <input type="radio" name="media" value="video" checked id='mediaVideo'>Video -->
+        <!-- <input type="radio" name="media" value="audio" checked id='mediaAudio'>audio -->
+      </div>
+      <button class="btn btn-default"  id='gUMbtn'>Request Microphone Acsess</button>
+    </div>
+    <div id='btns'>
+      <button class="btn btn-default" id='start' style="display: none">Start</button>
+      <button class="btn btn-default" id='stop' style="display: none">Stop</button>
+	  <br>
+		<h2>Record:</h2>
+		<input type="checkbox" value="1" id="recording_cb">
+	
+    </div>
+	<div>
+      <ul  class="list-unstyled" id='ul'></ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="hogghometest3.js"></script>
+  </body>
+	
+	<form action="audio_recv2.php" method="post" enctype="multipart/form-data" id="audioform">
+		<hr> <br>
+		Upload a audio file:
+		<input type="file" name="audiofile" id="audiofile"/>
+		<input type="submit" value="Upload!" name="submitbtn" />
+	</form>
+	<input type="button" value="submit2" onclick="submited()"/>
+	<br>
+	
+	<form action="upload.php" method="post" enctype="multipart/form-data" id="extraform" >
+		<input type="hidden" name="extra" value="passvar" id="passvar" />
+	</form>
+	<br><hr>
+	
+	<p>Use HoggHome-Online via text: </p>
+	<form action="pythontest.php" method="post" enctype="multipart/form-data" id="pythonform">
+		<input type="text" name="pythoninput" id="pythoninput" />
+		<br>
+		<input type="submit" name="submit" />
+	</form>
+</html>
+
+<script>
+function submited() {
+	console.log(document.getElementById("audiofile").value);
+	document.getElementById("audioform").submit();
+}
+</script>
