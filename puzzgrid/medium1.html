@@ -1,0 +1,421 @@
+<html>
+
+<style>
+	.body {
+		background-color: #e6f2ff;
+	}
+	.button {
+		width: 200px;
+		background-color: #66a3ff;
+		border: none;
+		color: white;
+		padding:50px 5px;
+		text-align: centre;
+		display: inline-block;
+		font-size: 16px;
+		}
+	.button:focus {outline:0}
+	.button:hover{
+		background-color: #3385ff;
+		}
+	.grid-container {
+		justify-content: center;
+  		display: grid;
+  		grid-template-columns: auto auto auto auto;
+  		background-color: #cce4ff;
+  		padding: 0px;
+		grid-template-columns: 200px 200px 200px 200px;
+		}
+	.grid-item {
+  		background-color: rgba(255, 255, 255, 0.8);
+  		border: 1px solid rgba(0, 0, 0, 0.8);
+  		padding: 1px;
+  		font-size: 2px;
+  		text-align: center;
+		}
+	.giveup_wrapper {
+		text-align: center;
+		}
+	.giveup_button {
+		position: absolute-left: 10px;
+		width= 100px;
+		background-color: #b3c6ff;
+		border: none;
+		border-radius: 3px;
+		padding: 20px;
+		text-align: center;
+		display: inline-block;
+		font-size: 14px;
+		}
+		
+	body {
+	  font-family: Arial, Helvetica, sans-serif;
+	}
+
+	.navbar {
+	  overflow: hidden;
+	  background-color: #333;
+	}
+
+	.navbar a {
+	  float: left;
+	  font-size: 16px;
+	  color: white;
+	  text-align: center;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	}
+
+	.dropdown {
+	  float: left;
+	  overflow: hidden;
+	}
+
+	.dropdown .dropbtn {
+	  font-size: 16px;  
+	  border: none;
+	  outline: none;
+	  color: white;
+	  padding: 14px 16px;
+	  background-color: inherit;
+	  font-family: inherit;
+	  margin: 0;
+	}
+
+	.navbar a:hover, .dropdown:hover .dropbtn {
+	  background-color: red;
+	}
+
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #f9f9f9;
+	  min-width: 160px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	}
+
+	.dropdown-content a {
+	  float: none;
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	  text-align: left;
+	}
+
+	.dropdown-content a:hover {
+	  background-color: #ddd;
+	}
+
+	.dropdown:hover .dropdown-content {
+	  display: block;
+
+</style>
+
+
+<script>
+	//######TO DO: 1)make a timer, make a timer you can change 2)fix hover 3)make hearts in last 2 4) make hints 5)php side
+	function shuffle(array) {
+		  var currentIndex = array.length, temporaryValue, randomIndex;
+		  // While there remain elements to shuffle...
+		  while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		  }
+		  return array;
+	}
+	
+	var selected = 0;
+	var selectedlist = [];
+	
+	var boollist = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+	//corlsit is what b1-b16 correspond to in text
+	
+	var correspondencelist = ["Clutch","Brood","Line","Nide","Wendy","Pane","Nana","Rod","Pain","Litter","Hook","Float","Pan","Sinker","Covey","Michael"];
+	correspondencelist = shuffle(correspondencelist);
+	console.log(correspondencelist);
+	
+	//answerlist is what catagories text goes into, searched by checkanswer()
+	
+	var answerlist = [["Pane", "Brood", "Pan", "Pain"], ["Wendy", "Michael", "Nana", "Hook"], ["Clutch", "Covey", "Litter", "Nide"], ["Float", "Rod", "Sinker", "Line"]];
+	
+	var linkslist = [[["bread", "Bread", "translations of bread"], "Translations of bread in different languages"], [["peter", "peter pan", "peter pan characters"], "All are Peter Pan characters"], [["broods", "brood", "collective", "birds", "bird"], "Broods of Birds"], [["fishing", "fishing terms"], "All are Fishing terms"]];
+	//#####HERE
+	var colorlist = ["#006622", "#8e256b", "#990000", "#007763"];
+	var correctCounter = 0;	
+	function wait(ms){
+		var start = new Date().getTime();
+		var end = start;
+		while(end < start + ms) {
+			end = new Date().getTime();
+		}
+	}
+	
+	function btnFunc1(val){ //expects b num passed, uses this to specify for given box
+		//boolvar1 = !boolvar1; //make individual var by adressing a list
+		boollist[(val-1)] = !boollist[(val-1)]
+		//if (boolvar1 == true){
+		if ((boollist[(val-1)]) == true){
+			selected = selected + 1;
+			selectedlist.push(val);//just push the val, not b1...b16...- Done
+				if (selected > 3){
+					var result = checkanswer(selectedlist); ////#### need to do this, may be invalidating function- Done
+					if (result == true){
+						console.log("result true");
+						correctCounter = correctCounter + 1;
+						correct_set(); //at bottom, makes green then disables
+						if (correctCounter >= 4) {
+							endof_game();
+						}
+						selected = 0;
+						selectedlist = [];
+					}
+				
+					else {
+						incorrect_reset(); //func at bottom
+						selected = 0;
+						selectedlist = [];
+					}
+				}
+				else {
+					document.getElementById(("b"+val)).style.backgroundColor="#ffcc00"; //doesnt like this else, issue with } ?
+				}
+		}
+		else {
+			var selfloc = selectedlist.indexOf(("b"+val));
+			selectedlist.splice(selfloc, 1);
+			selected = selected - 1; //at some point selected becomes -1. set to 0 then minused?
+			document.getElementById(("b"+val)).style.backgroundColor="#66a3ff";
+		}
+	}
+	function checkanswer(choicelist){ //isnt working for correct inputs########## being passed wrongthing, searchthrough needs country names
+		var search1 = searchthrough(correspondencelist[((choicelist[0])-1)]);
+		var search2 = searchthrough(correspondencelist[((choicelist[1])-1)]);
+		var search3 = searchthrough(correspondencelist[((choicelist[2])-1)]);
+		var search4 = searchthrough(correspondencelist[((choicelist[3])-1)]);
+			
+		if ((search1[0] == search2[0] && search1[0] == search3[0] && search1[0] == search4[0]) == true){ //this is true as all false
+			return true;
+		}
+		else {return false;}
+	}
+		
+	function searchthrough(compareitem){ //searches 
+		for (i=0; i<4; i++){
+			for (j=0; j<4; j++){
+				if (answerlist[i][j] == compareitem){ //???this is wrong, check other list (look upwards)
+					return [i, j];
+				}
+			}
+		}
+		return false;
+	}
+		
+	//var boxlist = ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11", "b12", "b13", "b14", "b15", "b16"]
+</script>
+	<body class="body">
+	<br><br><br><br><br><br><br><br>
+<div class="navbar">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="nonograms.html">Nonograms</a>
+  <div class="dropdown">
+    <button class="dropbtn">PuzzGrids 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="Easy.html">Easy &raquo</a>
+      <a href="Medium.html">Medium &raquo</a>
+      <a href="Hard.html">Hard &raquo</a>
+      <a href="Fiendish.html">Fiendish &raquo</a>
+    </div>
+  </div> 
+  <a href="hogghome.html">HoggHome online</a>
+</div>
+	<div class="grid-container">
+	  <div class="grid-item">
+		<button class="button" type="button" id="b1" onclick="btnFunc1(1)">Button1</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b2" onclick="btnFunc1(2)">Button2</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b3" onclick="btnFunc1(3)">Button3</button></div>  
+	  <div class="grid-item">
+		<button class="button" type="button" id="b4" onclick="btnFunc1(4)">Button4</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b5" onclick="btnFunc1(5)">Button5</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b6" onclick="btnFunc1(6)">Button6</button></div>  
+	  <div class="grid-item">
+		<button class="button" type="button" id="b7" onclick="btnFunc1(7)">Button7</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b8" onclick="btnFunc1(8)">Button8</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b9" onclick="btnFunc1(9)">Button9</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b10" onclick="btnFunc1(10)">Button10</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b11" onclick="btnFunc1(11)">Button11</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b12" onclick="btnFunc1(12)">Button12</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b13" onclick="btnFunc1(13)">Button13</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b14" onclick="btnFunc1(14)">Button14</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b15" onclick="btnFunc1(15)">Button15</button></div>
+	  <div class="grid-item">
+		<button class="button" type="button" id="b16" onclick="btnFunc1(16)">Button16</button></div> 
+</div>
+	<br>
+	<div class="giveup_wrapper">
+	<button class="giveup_button" type="button" id="b_giveup" onclick="giveupFunc()">Give Up</button>
+	</div>
+	</body>
+</html>
+<script>
+	for (i=1; i<17; i++){
+		document.getElementById(("b"+i)).innerHTML=(correspondencelist[(i-1)]);
+	}
+	function incorrect_reset() { //flashes red
+		//boollist[(selectedlist[0])] = false; #for now just set entire boollist all to false, may make issues with already correct ones
+		//boollist[(selectedlist[1])] = false;
+		//boollist[(selectedlist[2])] = false;
+		//boollist[(selectedlist[3])] = false;
+		
+		boollist = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+	
+		var redBox1 = document.getElementById(("b"+(selectedlist[0])));
+		var redBox2 = document.getElementById(("b"+(selectedlist[1])));
+		var redBox3 = document.getElementById(("b"+(selectedlist[2])));
+		var redBox4 = document.getElementById(("b"+(selectedlist[3])));
+		redBox1.style.backgroundColor="#ff3333";
+		redBox2.style.backgroundColor="#ff3333";
+		redBox3.style.backgroundColor="#ff3333";
+		redBox4.style.backgroundColor="#ff3333";
+		setTimeout(function(){
+			redBox1.style.backgroundColor="#66a3ff";
+			redBox2.style.backgroundColor="#66a3ff";
+			redBox3.style.backgroundColor="#66a3ff";
+			redBox4.style.backgroundColor="#66a3ff";
+		}, 500)
+	}
+	
+	function correct_set(){
+		var greenBox1 = document.getElementById(("b"+(selectedlist[0])));
+		var greenBox2 = document.getElementById(("b"+(selectedlist[1])));
+		var greenBox3 = document.getElementById(("b"+(selectedlist[2])));
+		var greenBox4 = document.getElementById(("b"+(selectedlist[3])));
+		greenBox1.style.backgroundColor="#008000";
+		greenBox2.style.backgroundColor="#008000";
+		greenBox3.style.backgroundColor="#008000";
+		greenBox4.style.backgroundColor="#008000";
+		greenBox1.disabled=true;
+		greenBox2.disabled=true;
+		greenBox3.disabled=true;
+		greenBox4.disabled=true;
+	}
+	
+	function endof_game(){ //needs to:make entry boxes, re order boxes, give each row a color, disable buttons
+		//to add textboxes, may need to add another row to gridcontainer
+		//reorder boxes
+		var counter1 = 1;
+		for (i=0; i<4; i++){
+			for (j=0; j<4; j++){
+				document.getElementById(("b"+counter1)).innerHTML=(answerlist[i][j]);
+				document.getElementById(("b"+counter1)).style.backgroundColor=(colorlist[i]);
+				counter1 = counter1+1;
+			}
+		}
+		setTimeout(function(){
+			var ask1 = prompt("Row 1 Link: ") //needs a check answer function and answer list- got this
+			if (linkslist[0][0].includes(ask1)) {console.log("1st correct!");
+				var ask1bool1 = true;
+				document.getElementById("b1").style.backgroundColor="#00e600";
+				document.getElementById("b2").style.backgroundColor="#00e600";
+				document.getElementById("b3").style.backgroundColor="#00e600";
+				document.getElementById("b4").style.backgroundColor="#00e600";
+				alert("Correct! The Link was: \n "+(linkslist[0][1]));
+			} //https://stackoverflow.com/questions/2430000/determine-if-string-is-in-list-in-javascript
+			else {
+				var askbool1 = false;
+				document.getElementById("b1").style.backgroundColor="#ff0000";
+				document.getElementById("b2").style.backgroundColor="#ff0000";
+				document.getElementById("b3").style.backgroundColor="#ff0000";
+				document.getElementById("b4").style.backgroundColor="#ff0000";
+				alert("Incorrect :( The Link was: \n "+(linkslist[0][1]));
+			}
+		}, 1)
+		setTimeout(function(){
+		var ask2 = prompt("Row 2 Link: ") //needs a check answer function and answer list- got this
+		if (linkslist[1][0].includes(ask2)) {console.log("2nd correct!");
+				var ask1bool2 = true;
+				document.getElementById("b5").style.backgroundColor="#00e600";
+				document.getElementById("b6").style.backgroundColor="#00e600";
+				document.getElementById("b7").style.backgroundColor="#00e600";
+				document.getElementById("b8").style.backgroundColor="#00e600";
+				alert("Correct! The Link was: \n "+(linkslist[1][1]));
+			}
+			else {
+				var askbool2 = false;
+				document.getElementById("b5").style.backgroundColor="#ff0000";
+				document.getElementById("b6").style.backgroundColor="#ff0000";
+				document.getElementById("b7").style.backgroundColor="#ff0000";
+				document.getElementById("b8").style.backgroundColor="#ff0000";
+				alert("Incorrect :( The Link was: \n "+(linkslist[1][1]));
+			}
+		}, 1)
+		setTimeout(function(){
+		var ask3 = prompt("Row 3 Link: ") //needs a check answer function and answer list- got this
+		if (linkslist[2][0].includes(ask3)) {console.log("3rd correct!");
+				var ask1bool3 = true;
+				document.getElementById("b9").style.backgroundColor="#00e600";
+				document.getElementById("b10").style.backgroundColor="#00e600";
+				document.getElementById("b11").style.backgroundColor="#00e600";
+				document.getElementById("b12").style.backgroundColor="#00e600";
+				alert("Correct! The Link was: \n "+(linkslist[2][1]));
+			}
+			else {
+				var askbool3 = false;
+				document.getElementById("b9").style.backgroundColor="#ff0000";
+				document.getElementById("b10").style.backgroundColor="#ff0000";
+				document.getElementById("b11").style.backgroundColor="#ff0000";
+				document.getElementById("b12").style.backgroundColor="#ff0000";
+				alert("Incorrect :( The Link was: \n "+(linkslist[2][1]));
+			}
+		}, 1)
+		setTimeout(function(){
+		var ask4 = prompt("Row 4 Link: ") //needs a check answer function and answer list- got this
+		if (linkslist[3][0].includes(ask4)) {console.log("4th correct!");
+				var ask1bool4 = true;
+				document.getElementById("b13").style.backgroundColor="#00e600";
+				document.getElementById("b14").style.backgroundColor="#00e600";
+				document.getElementById("b15").style.backgroundColor="#00e600";
+				document.getElementById("b16").style.backgroundColor="#00e600";
+				alert("Correct! The Link was: \n "+(linkslist[3][1]));
+			}
+			else {
+				var askbool4 = false;
+				document.getElementById("b13").style.backgroundColor="#ff0000";
+				document.getElementById("b14").style.backgroundColor="#ff0000";
+				document.getElementById("b15").style.backgroundColor="#ff0000";
+				document.getElementById("b16").style.backgroundColor="#ff0000";
+				alert("Incorrect :( The Link was: \n "+(linkslist[3][1]));
+			}
+		}, 1)
+		
+		if (askbool1 == true && askbool2 == true && askbool3 == true && askbool4 == true) {
+			alert("All correct! Congratulations!");
+		}
+		
+	}
+	function giveupFunc() {
+		endof_game();
+	}
+	
+</script>

@@ -1,0 +1,69 @@
+#header {
+	margin: 0px;
+	padding-bottom: 10px;
+	background-color: lightgrey;
+	text-align: centre;
+}
+	
+#body {
+	margin: 0;
+	font-family: Arial, Helvetica, comic-sans;
+	background-color: grey;
+}
+#printoutsleepstatus {
+	margin: auto;
+	background-image: url('mainbg.png');
+	size: 200%;
+	height: 20%;
+	background-position: centre;
+	background-repeat: repeat;
+	background-size: cover;
+	color: white;
+	top: 50%;
+	text-align: centre;
+	text-indent: 20%;
+	line-height: 50px;
+	font-size: 2.5em;
+	padding-bottom: 10px;
+	text-align: middle;
+	
+}
+#form {
+	text-align: center;
+	background-color: lightgrey;
+	padding-bottom: 20px;
+	border-bottom: 0px;
+}
+
+#body {
+	background-color: grey;
+}
+#index{background-color: lightgrey;}
+
+div.joepic {
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: grey;
+	padding-top: 20px;
+	border-radius: 2%
+	
+}
+
+div.pkimg{
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+}
+div.nonogram{
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 5px;
+	background-color: grey;
+	
+}

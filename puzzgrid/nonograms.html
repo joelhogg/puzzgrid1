@@ -1,0 +1,261 @@
+
+<html>
+<style>
+	.button {
+		width: 60px;
+		background-color: #ffffff;
+		border: none;
+		color: white;
+		padding:20px;
+		text-align: centre;
+		display: inline-block;
+		font-size: 16px;
+	}
+	.button:hover {
+		background-color: #f2f2f2;
+	}
+	.button:focus {outline:0}
+	.grid-container {
+		justify-content: center;
+  		display: grid;
+  		grid-template-columns: auto auto auto auto;
+  		background-color: #ffffff;
+  		padding: 0px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
+		background-color: #e6f7ff;
+	}
+	.grid-item {
+  		background-color: rgba(255, 255, 255);
+  		border: 1px solid rgba(0, 0, 0);
+  		padding: 1px;
+  		font-size: 16px;
+  		text-align: center;
+	}
+
+
+
+
+
+	.body {
+		background-color: #e6f2ff;
+	}	
+	body {
+	  font-family: Arial, Helvetica, sans-serif;
+	}
+	.navbar {
+	  overflow: hidden;
+	  background-color: #333;
+	}
+	.navbar a {
+	  float: left;
+	  font-size: 16px;
+	  color: white;
+	  text-align: center;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	}
+	.dropdown {
+	  float: left;
+	  overflow: hidden;
+	}
+	.dropdown .dropbtn {
+	  font-size: 16px;  
+	  border: 10px; 
+	  outline: none;
+	  color: white;
+	  padding: 14px 16px;
+	  background-color: inherit;
+	  font-family: inherit;
+	  margin: 0;
+	  overflow: none;
+	}
+	.navbar a:hover, .dropdown:hover .dropbtn {
+	  background-color: red;
+	}
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #f9f9f9;
+	  min-width: 160px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	}
+	.dropdown-content a {
+	  float: none;
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	  text-align: left;
+	}
+	.dropdown-content a:hover {
+	  background-color: #ddd;
+	}
+	.dropdown:hover .dropdown-content {
+	  display: block;
+	  }
+	.titlediv {
+	
+	}
+</style>
+
+<html>
+	<body class="body">
+	<div class="navbar">
+	<div class="navbar">
+	  <a href="index.html">Home</a>
+	  <a href="about.html">About</a>
+	  <a href="nonograms.html">Nonograms</a>
+	  <div class="dropdown">
+		<button class="dropbtn">PuzzGrids 
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content">
+		  <a href="Easy.html">Easy &raquo</a>
+		  <a href="Medium.html">Medium &raquo</a>
+		  <a href="Hard.html">Hard &raquo</a>
+		  <a href="Fiendish.html">Fiendish &raquo</a>
+		</div>
+	  </div> 
+	  <a href="hogghome.html">HoggHome online</a>
+	</div>
+	</div>
+</html>
+
+<script>
+	//constants
+	const GRID_SIZE = 9 //number of squares in a row or column
+	const NUM_SQUARES = GRID_SIZE**2; //total number of squares in grid
+	
+	//generate solved grid array
+	var solvedGrid = []
+	
+	
+	for (i=0; i<GRID_SIZE; i++) {
+		solvedGrid[i] = []
+		
+		for(var j=0; j<GRID_SIZE; j++) {
+			solvedGrid[i][j] = Math.floor(Math.random()*3) == 0 ? 0 : 1;
+		}
+	}
+	
+	var userGrid = []
+	
+	//fill user grid with zeros
+	for (i=0; i<GRID_SIZE; i++) {
+		userGrid[i] = []
+		
+		for(var j=0; j<GRID_SIZE; j++) {
+			userGrid[i][j] = -1;
+		}
+	}
+	
+	function isSolved() {
+		//check whether grid has been solved
+		for(var i=0; i<GRID_SIZE; i++) {
+			for(var j=0; j<GRID_SIZE; j++) {
+				if(userGrid[i][j] != solvedGrid[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	function btnFunc(val) {	
+		/*
+		button states:
+			-1 - white
+			1 - black
+			0 - crossed
+		*/
+		
+		if(document.getElementById("b"+val).state == null) document.getElementById("b"+val).state = -1;
+	
+		if(document.getElementById("b"+val).state == -1) {
+			//if white, set button to black when clicked on
+			document.getElementById("b"+val).style.backgroundColor="#000000";
+			document.getElementById("b"+val).state = 1;
+		} else if(document.getElementById("b"+val).state == 1) {
+			//if already black, set button back to crossed
+			document.getElementById("b"+val).style.backgroundColor="#ffffff";
+			document.getElementById("b"+val).state = 0;
+			
+		} else {
+			//if crossed, set button to white
+			document.getElementById("b"+val).style.backgroundColor="#ffffff";
+			document.getElementById("b"+val).state = -1;
+		}
+		
+		//set value in user grid to button state
+		userGrid[val%GRID_SIZE][Math.floor(val/GRID_SIZE)] = document.getElementById("b"+val).state
+		
+		//hide cross in buttons with states of 1 or -1 by setting font colour equal to background	
+		document.getElementById("b"+val).style.color = document.getElementById("b"+val).state == 0 ? "black" : document.getElementById("b"+val).style.backgroundColor;
+		
+		if(isSolved()) {
+			alert("You solved the Nonogram!");
+		}
+	}
+	
+	//drawing grid
+	var html = '<div class="titlediv"><center><h1>Nonogram Weekly ('+GRID_SIZE+'x'+GRID_SIZE+')</center></div><div class="grid-container">';
+	
+	for(var i=-1; i<NUM_SQUARES+GRID_SIZE*2; i++) {
+		var id = i-GRID_SIZE-Math.floor(i/(GRID_SIZE+1))
+	
+		if((i+1) % (GRID_SIZE+1) != 0 && i > GRID_SIZE) {
+			html += '<div class="grid-item"><button class="button" type="button" id="b'
+		+id+'" onclick="btnFunc('+id+')">X</button></div>';
+		} else {
+			var text = ""
+			var num = 0;
+			var pos = 0;
+		
+			if(i != -1) { //if not corner square
+				if(i<GRID_SIZE) { //if top row of grid
+					pos = i;
+			
+					for(var j=0; j<GRID_SIZE; j++) {
+						if(solvedGrid[pos][j] == 1) {
+							num++;
+						} else {
+							if(num != 0) { 
+								text += num+"<br>";
+								num = 0;
+							};
+						}
+						
+						if(j == GRID_SIZE-1 && num > 0) text += num;
+					}
+				} else { //if on edge
+					pos = i%GRID_SIZE;
+					
+					for(var j=0; j<GRID_SIZE; j++) {
+						if(solvedGrid[j][pos] == 1) {
+							num++;
+						} else {
+							if(num != 0) { 
+								text += num+" ";
+								num = 0;
+							};
+						}
+						if(j == GRID_SIZE-1 && num > 0) text += num;
+					}
+				}
+			}
+		
+			html += '<div class="grid-item"><b>'+text+'</b></div>'
+		}
+	}
+	
+	html += '</div><center><p><a href=https://qlgez7eenmnnjqckregvqg-on.drv.tw/Hosting/nonogram-weekly-legacy.html>Legacy.</a> Copyright 2019 Joel Hamlett. All rights reserved.</p></center>';
+	
+	document.write(html);
+</script>
+<html>
+	</body>
+</html>
+<script async src="https://drv.tw/inc/wd.js"></script></html>

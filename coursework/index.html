@@ -1,0 +1,100 @@
+<html>
+	<div class="main">
+	
+		<div class="top">
+			<form action="logonpage.html">
+				<input type="submit" value="login" />
+			</form>
+			<div class="status" id="status1">
+				<a>Status Here</a>
+			</div>
+			<div class="login-status" id="status2">
+				<a>Login Status Here</a>
+			</div>
+		</div>
+		<br><br>
+		<div class="main-buttons">
+			<form action="signinout.php" method="post">
+				<div class="signin-div">
+					<input type="submit" name="signin_button" value="Sign In" class="signin-button" />
+				</div>
+				<div class="signout-div">
+					<input type="submit" name="signout_button" value="Sign Out" class="signout-button" />
+				</div>
+			</form>
+		</div>
+		
+	</div>
+</html>
+
+<script>
+	function getCookie(name){
+		var re=new RegExp(name+"=([^;]+)");
+		var value=re.exec(document.cookie);
+		return(value!=null)?unescape(value[1]):null;
+		}
+	vCheck = getCookie("check");
+	if (vCheck == "True") {
+		username_get = getCookie("username");
+		inout_get = getCookie("inout_status");
+		document.getElementById("status1").innerHTML = "Signed "+inout_get;
+		document.getElementById("status2").innerHTML = "Logged in as: "+username_get;
+	}
+	else {
+		document.getElementById("status2").innerHTML = "Logged Out.";
+	}
+</script>
+
+<style>
+	.main {
+		
+	}
+	
+	.top {
+		text-align: center;
+	}
+	
+	.main-buttons {
+		text-align: center;
+	}
+	.login-button {
+		float: center-left;
+	}
+	.status {
+		float: center-right;
+	}
+	.login-status {
+		float: bottom;
+	}
+	.signin-button {
+		background-color: green;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+
+	}
+	.signout-button {
+		background-color: red;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+	}
+	.signin-div {
+		padding-right: 10%;
+		padding-left: 10%;
+	}
+	.signout-div {
+		padding-right: 10%;
+		padding-left: 10%;
+	}
+</style>
